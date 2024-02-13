@@ -41,3 +41,35 @@ def find_rhythms(nums, target=1, limit=100):
         idx += 1
 
     return combos
+
+
+if __name__ == "__main__":
+    notes = [1] + [1/2]*2 + [1/4]*4 + [1/8]*8 + [1/16]*16
+    randomly_replace_with_rests = False
+    time_sig = 1  # literally 4/4
+    limit = 5272  # appears to stop finding new measures at this point
+
+    aliases = {
+        1:      "c1",
+        0.5:    "c2",
+        0.25:   "c4",
+        0.125:  "c8",
+        0.0625: "c16"
+    }  # aliases for note lengths to be used in frescobaldi
+
+    rhythms = find_rhythms(notes, target=time_sig, limit=limit)
+    rhythms = sorted(rhythms, key=len)
+
+    if randomly_replace_with_rests:
+        for r in rhythms:
+            for note in r:
+                if randint(0, 100) >= 10:
+                    print(f"{aliases[note]}", end=" ")
+                else:
+                    print(f"{aliases[note].replace('c', 'r')}", end=" ")
+            print()
+    else:
+        for r in rhythms:
+            for note in r:
+                print(f"{aliases[note]}", end=" ")
+            print()
