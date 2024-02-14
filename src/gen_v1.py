@@ -6,70 +6,81 @@
 # or at https://creativecommons.org/publicdomain/zero/1.0/
 
 
-from random import choice
+from typing import Tuple, List
+from dataclasses import dataclass
+from random import choice, randint
 
 
-def find_rhythms(nums, target=1, limit=100):
+@dataclass
+class Note:
+    alias: str
+    fraction: Tuple[int, int]
+
+    @property
+    def length(self) -> float:
+        return self.fraction[0] / self.fraction[1]
+
+    def __str__(self) -> str:
+        return f"{self.fraction[0]}/{self.fraction[1]}"
+
+
+def filter_note_choices(notes: List[Note], remaining: float) -> List[Note]:
+    return [note for note in notes if note.length <= remaining]
+
+
+def find_rhythms(notes: List[Note], time_sig: float = 4/4, limit: int = 100) -> List[List[Note]]:
     idx = 0
-    combos = []
+    measures = []
 
     while idx < limit:
-        cur_combo = []
-        cur_length = 0
-        options = nums
+        measure = []
+        options = notes
+        measure_length = 0
 
-        while cur_length <= target:
-            # get all note lengths that are less than the remaining length
-            options = [i for i in options if (i + cur_length) <= target]
+        while measure_length <= time_sig:
+            # get all note lengths that are less/equal to remaining time
+            options = filter_note_choices(options, time_sig - measure_length)
 
             if len(options) == 0:
-                break  # if there are no valid choices
+                break  # there are no valid choices
 
-            ch = choice(options)
+            note = choice(options)
+            measure.append(note)
+            measure_length += note.length
 
-            cur_combo.append(ch)
-            cur_length += ch
+        if measure_length != time_sig:
+            continue  # current notes are more/less than 1 measure in time_sig
 
-        if cur_length > target:
-            continue  # current notes are longer than 1 measure
+        if measure in measures:
+            continue  # current rhythm has already been found
 
-        if cur_combo in combos:
-            continue  # no repeated rhythms
-
-        combos.append(cur_combo)
-
+        measures.append(measure)
         idx += 1
+        print(f"\rmeasures generated: {idx}", end="")
 
-    return combos
+    return measures
 
 
 if __name__ == "__main__":
-    notes = [1] + [1/2]*2 + [1/4]*4 + [1/8]*8 + [1/16]*16
-    randomly_replace_with_rests = False
-    time_sig = 1  # literally 4/4
-    limit = 5272  # appears to stop finding new measures at this point
+    c1  = Note('c1', (1, 1))
+    c2  = Note('c2', (1, 2))
+    c4  = Note('c4', (1, 4))
+    c8  = Note('c8', (1, 8))
+    c16 = Note('c16', (1, 16))
 
-    aliases = {
-        1:      "c1",
-        0.5:    "c2",
-        0.25:   "c4",
-        0.125:  "c8",
-        0.0625: "c16"
-    }  # aliases for note lengths to be used in frescobaldi
+    notes = [c1] + [c2]*2 + [c4]*4 + [c8]*8 + [c16]*16
 
-    rhythms = find_rhythms(notes, target=time_sig, limit=limit)
+    rest_replace = False
+    time_sig = 4/4
+    limit = 5272
+
+    rhythms = find_rhythms(notes, time_sig=time_sig, limit=limit)
     rhythms = sorted(rhythms, key=len)
 
-    if randomly_replace_with_rests:
-        for r in rhythms:
-            for note in r:
-                if randint(0, 100) >= 10:
-                    print(f"{aliases[note]}", end=" ")
-                else:
-                    print(f"{aliases[note].replace('c', 'r')}", end=" ")
-            print()
-    else:
-        for r in rhythms:
-            for note in r:
-                print(f"{aliases[note]}", end=" ")
-            print()
+    for r in rhythms:
+        for note in r:
+            if rest_replace and (randint(0, 100)) < 20:
+                print(note.alias.replace('c', 'r'), end=" ")
+            else:
+                print(note.alias, end=" ")
+        print()
