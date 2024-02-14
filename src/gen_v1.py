@@ -20,7 +20,7 @@ class Note:
     def length(self) -> float:
         return self.fraction[0] / self.fraction[1]
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         return f"{self.fraction[0]}/{self.fraction[1]}"
 
 
@@ -28,7 +28,7 @@ def filter_note_choices(notes: List[Note], remaining: float) -> List[Note]:
     return [note for note in notes if note.length <= remaining]
 
 
-def find_rhythms(notes: List[Note], time_sig: float = 4/4, limit: int = 100) -> List[List[Note]]:
+def find_rhythms(notes: List[Note], time_sig: float = 4/4, limit: int = 100, verbose=False) -> List[List[Note]]:
     idx = 0
     measures = []
 
@@ -56,7 +56,11 @@ def find_rhythms(notes: List[Note], time_sig: float = 4/4, limit: int = 100) -> 
 
         measures.append(measure)
         idx += 1
-        print(f"\rmeasures generated: {idx}", end="")
+        if verbose:
+            print(f"\rmeasures generated: {idx}", end="")
+
+    if verbose:
+        print()
 
     return measures
 
@@ -67,14 +71,15 @@ if __name__ == "__main__":
     c4  = Note('c4', (1, 4))
     c8  = Note('c8', (1, 8))
     c16 = Note('c16', (1, 16))
+    c32 = Note('c32', (1, 32))
 
-    notes = [c1] + [c2]*2 + [c4]*4 + [c8]*8 + [c16]*16
+    notes = [c1] + [c2]*2 + [c4]*4 + [c8]*8 + [c16]*16 + [c32]*32
 
     rest_replace = False
-    time_sig = 4/4
+    time_sig = 2/4
     limit = 5272
 
-    rhythms = find_rhythms(notes, time_sig=time_sig, limit=limit)
+    rhythms = find_rhythms(notes, time_sig=time_sig, limit=limit, verbose=True)
     rhythms = sorted(rhythms, key=len)
 
     for r in rhythms:
