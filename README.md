@@ -5,3 +5,13 @@ A compilation using randomly generated measures in 4/4. No rests, from whole not
 - generator [source code](/src/gen_v1.py)
 - digital copy on [GitHub](/books/rhythms-an-exhaustive-collection-of-rhythms-in-common-time.pdf) (gratis)
 - paperback copy on [Amazon](https://www.amazon.com/dp/B0CVLH36QZ)
+
+---
+
+## Goals:
+- [ ] separate mass measure generation from measure generator
+- [ ] add lilypond support for instantiating notes
+- [ ] add midi I/O
+- [ ] add support for tuplets and dotted notes
+- [ ] combine rests that occur sequentially where appropriate
+- [ ] design recursive measure generator for large-scale exhaustive search
