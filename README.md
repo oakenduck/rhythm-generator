@@ -9,9 +9,9 @@ A compilation using randomly generated measures in 4/4. No rests, from whole not
 ---
 
 ## Goals:
-- [ ] separate mass measure generation from measure generator
+- [x] separate mass measure generation from measure generator
 - [ ] add lilypond support for instantiating notes
 - [ ] add midi I/O
 - [ ] add support for tuplets and dotted notes
-- [ ] combine rests that occur sequentially where appropriate
+- [x] combine rests that occur sequentially where appropriate
 - [ ] design recursive measure generator for large-scale exhaustive search
