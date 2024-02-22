@@ -9,6 +9,7 @@
 from typing import Tuple, List
 from dataclasses import dataclass
 from random import choice, randint
+from datetime import datetime as dt
 
 
 @dataclass
@@ -21,11 +22,7 @@ class Note:
         return self.fraction[0] / self.fraction[1]
 
     def __repr__(self) -> str:
-        return f"{self.fraction[0]}/{self.fraction[1]}"
-
-
-def filter_note_choices(notes: List[Note], remaining: float) -> List[Note]:
-    return [note for note in notes if note.length <= remaining]
+        return self.alias
 
 
 def find_rhythms(notes: List[Note], time_sig: float = 4/4, limit: int = 100, verbose=False) -> List[List[Note]]:
@@ -33,20 +30,7 @@ def find_rhythms(notes: List[Note], time_sig: float = 4/4, limit: int = 100, ver
     measures = []
 
     while idx < limit:
-        measure = []
-        options = notes
-        measure_length = 0
-
-        while measure_length <= time_sig:
-            # get all note lengths that are less/equal to remaining time
-            options = filter_note_choices(options, time_sig - measure_length)
-
-            if len(options) == 0:
-                break  # there are no valid choices
-
-            note = choice(options)
-            measure.append(note)
-            measure_length += note.length
+        measure, measure_length = generate_measure(notes, time_sig)
 
         if measure_length != time_sig:
             continue  # current notes are more/less than 1 measure in time_sig
@@ -65,27 +49,19 @@ def find_rhythms(notes: List[Note], time_sig: float = 4/4, limit: int = 100, ver
     return measures
 
 
-if __name__ == "__main__":
-    c1  = Note('c1', (1, 1))
-    c2  = Note('c2', (1, 2))
-    c4  = Note('c4', (1, 4))
-    c8  = Note('c8', (1, 8))
-    c16 = Note('c16', (1, 16))
-    c32 = Note('c32', (1, 32))
+def generate_measure(notes: List[Note], time_sig: float = 4/4) -> Tuple[List[Note], float]:
+    m_length = 0
+    measure = []
 
-    notes = [c1] + [c2]*2 + [c4]*4 + [c8]*8 + [c16]*16 + [c32]*32
+    while m_length <= time_sig:
+        # get all note lengths that are less/equal to remaining length
+        notes = [note for note in notes if note.length <= time_sig - m_length]
 
-    rest_replace = False
-    time_sig = 2/4
-    limit = 5272
+        if len(notes) == 0:
+            break  # there are no valid options
 
-    rhythms = find_rhythms(notes, time_sig=time_sig, limit=limit, verbose=True)
-    rhythms = sorted(rhythms, key=len)
+        note = choice(notes)
+        measure.append(note)
+        m_length += note.length
 
-    for r in rhythms:
-        for note in r:
-            if rest_replace and (randint(0, 100)) < 20:
-                print(note.alias.replace('c', 'r'), end=" ")
-            else:
-                print(note.alias, end=" ")
-        print()
+    return measure, m_length
