@@ -50,11 +50,19 @@ if __name__ == "__main__":
         rhythms.append(measure)
         idx += 1
 
+        print(f"\rmeasures generated: {idx}", end="")
+
+    print("\ngeneration complete.")
 
     if args.output is not None:
         for measure in rhythms:
             args.output.write(" ".join(n.alias for n in measure) + "\n")
+
         args.output.close()
+        print(f"output in {args.output.name}")
     else:
-        for measure in rhythms:
+        for measure in rhythms[:1000]:
             print(" ".join(n.alias for n in measure))
+
+        if len(rhythms) > 1000:
+            print("output truncated due to size limit")
