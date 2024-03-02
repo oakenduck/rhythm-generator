@@ -7,22 +7,9 @@
 
 
 from typing import Tuple, List
-from dataclasses import dataclass
 from random import choice, randint
-from datetime import datetime as dt
 
-
-@dataclass
-class Note:
-    alias: str
-    fraction: Tuple[int, int]
-
-    @property
-    def length(self) -> float:
-        return self.fraction[0] / self.fraction[1]
-
-    def __repr__(self) -> str:
-        return self.alias
+from note import Note
 
 
 def find_rhythms(notes: List[Note], time_sig: float = 4/4, limit: int = 100, verbose=False) -> List[List[Note]]:
@@ -49,7 +36,7 @@ def find_rhythms(notes: List[Note], time_sig: float = 4/4, limit: int = 100, ver
     return measures
 
 
-def generate_measure(notes: List[Note], time_sig: float = 4/4) -> Tuple[List[Note], float]:
+def generate_measure(notes: List[Note], time_sig: float = 4/4) -> List[Note]:
     m_length = 0
     measure = []
 
@@ -64,4 +51,4 @@ def generate_measure(notes: List[Note], time_sig: float = 4/4) -> Tuple[List[Not
         measure.append(note)
         m_length += note.length
 
-    return measure, m_length
+    return measure
