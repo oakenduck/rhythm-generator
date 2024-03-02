@@ -1,6 +1,6 @@
 # rhythm-generator
 
-### How to Use:
+### Usage:
 ```
 $ git clone https://github.com/oakenduck/rhythm-generator
 $ cd rhythm-generator/src
