@@ -4,9 +4,17 @@
 ```
 $ git clone https://github.com/oakenduck/rhythm-generator
 $ cd rhythm-generator/src
-$ python rgen.py args
+$ python rgen.py
 ```
-find output in `src/output`
+```
+-r, --rests        : bool     -> include rests
+-v, --verbose      : bool     -> verbose output
+-m, --meter        : int int  -> time signature
+-o, --output       : file     -> output destination
+-c, --count        : int      -> measures to generate
+-s, --subdivision  : int      -> smallest subdivision
+-t, --tuplet       : int...   -> tuplet types to include (unimplemented)
+```
 
 ### Rhythms: An Exhaustive Collection of Rhythms in Common Time
 A compilation using randomly generated measures in 4/4. No rests, from whole notes to 16th notes. Effectively a prototype and proof of concept for what's to come.
