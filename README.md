@@ -1,5 +1,13 @@
 # rhythm-generator
 
+### How to Use:
+```
+$ git clone https://github.com/oakenduck/rhythm-generator
+$ cd rhythm-generator/src
+$ python rgen.py args
+```
+find output in `src/output`
+
 ### Rhythms: An Exhaustive Collection of Rhythms in Common Time
 A compilation using randomly generated measures in 4/4. No rests, from whole notes to 16th notes. Effectively a prototype and proof of concept for what's to come.
 - generator [source code](/src/gen_v1.py)
