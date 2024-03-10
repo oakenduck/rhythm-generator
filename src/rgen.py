@@ -25,7 +25,6 @@ if __name__ == "__main__":
             f"meter: {args.meter[0]}/{args.meter[1]}\n"
         )
 
-
     notes = distribute_notes(subd_idx)
     rests = [
         build_note(s, rest=True) for s in subdivision_choices[:subd_idx + 1]
