@@ -68,6 +68,19 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    "-d",
+    "--dots",
+    action="store_true",
+    help="include dotted notes"
+)
+
+parser.add_argument(
+    "--sorted",
+    action="store_true",
+    help="whether to sort output by length of measure"
+)
+
+parser.add_argument(
     "-o",
     "--output",
     metavar="f",
