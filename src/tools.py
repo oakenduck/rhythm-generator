@@ -58,7 +58,7 @@ def combine_rests(measure: List[Note], rests: List[Note]) -> List[Note]:
     return ret_measure
 
 
-def is_all_rests(measure:List[Note]) -> bool:
+def is_all_rests(measure: List[Note]) -> bool:
     return not any("r" not in note.alias for note in measure)
 
 
