@@ -33,6 +33,11 @@ if __name__ == "__main__":
     if args.rests:
         notes += distribute_notes(subd_idx, rest=True, coeff=0.5)
 
+    if args.dots:
+        notes += distribute_notes(subd_idx - 1, dot=True, coeff=0.35)
+        if args.rests:
+            notes += distribute_notes(subd_idx - 1, dot=True, rest=True, coeff=0.35)
+
     idx = 0
     rhythms = []
     time_sig = args.meter[0]/args.meter[1]
@@ -52,6 +57,9 @@ if __name__ == "__main__":
         print(f"\rmeasures generated: {idx}", end="")
 
     print("\ngeneration complete.")
+
+    if args.sorted:
+        rhythms = sorted(rhythms, key=len)
 
     if args.output is not None:
         for measure in rhythms:
