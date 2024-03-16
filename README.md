@@ -7,8 +7,10 @@ $ cd rhythm-generator/src
 $ python rgen.py
 ```
 ```
--r, --rests        : bool     -> include rests
--v, --verbose      : bool     -> verbose output
+-r, --rests        :          -> include rests
+-d, --dots         :          -> include dotted notes
+-v, --verbose      :          -> verbose output
+    --sorted       :          -> sort least to most notes per measure
 -m, --meter        : int int  -> time signature
 -o, --output       : file     -> output destination
 -c, --count        : int      -> measures to generate
@@ -33,8 +35,11 @@ Another experiment to understand the publishing process and mass scale measure g
 
 ## Goals:
 - [x] separate mass measure generation from measure generator
-- [ ] add lilypond support for instantiating notes
-- [ ] add midi I/O
-- [ ] add support for tuplets and dotted notes
 - [x] combine rests that occur sequentially where appropriate
+- [ ] add support for tuplets and dotted notes
+  - [x] dotted notes
+  - [ ] tuplets
+- [ ] support stem placement for complex odd meters
+- [ ] add midi I/O
+- [ ] add lilypond support for instantiating notes
 - [ ] design recursive measure generator for large-scale exhaustive search
