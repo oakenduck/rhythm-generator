@@ -1,5 +1,7 @@
 # rhythm-generator
 
+This tool has been used to generate literally millions of measures in arbitrary time signatures for my own entertainment and experiments. Some of these have resulted in documents existing as collections of them, which can be found in the [rhythm-books](https://github.com/oakenduck/rhythm-books) repository.
+
 ### Usage:
 ```
 $ git clone https://github.com/oakenduck/rhythm-generator
@@ -18,19 +20,6 @@ $ python rgen.py
 -t, --tuplet       : int...   -> tuplet types to include (unimplemented)
 ```
 
----
-
-### Rhythms: An Exhaustive Collection of Rhythms in Common Time
-A compilation using randomly generated measures in 4/4. No rests, from whole notes to 16th notes. Effectively a prototype and proof of concept for what's to come.
-- generator [source code](/src/gen_v1.py)
-- digital copy on [GitHub](/books/rhythms-an-exhaustive-collection-of-rhythms-in-common-time.pdf) (gratis)
-- paperback copy on [Amazon](https://www.amazon.com/dp/B0CVLH36QZ)
-
-### Rhythms: Twenty-Thousand Measures in Common Time
-Another experiment to understand the publishing process and mass scale measure generation.
-- generator [source code](/src/gen_v1.py)
-- digital copy on [GitHub](/books/rhythms-twenty-thousand-measures-in-common-time.pdf) (gratis)
-- paperback copy on [Amazon](https://www.amazon.com/dp/B0CXM4H7YG)
 ---
 
 ## Goals:
